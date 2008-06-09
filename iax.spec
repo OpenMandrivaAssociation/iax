@@ -102,9 +102,13 @@ install -m0644 src/*.h %{buildroot}%{_includedir}/iax/
 %multiarch_binaries %{buildroot}%{_bindir}/iax-config
 %endif
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
