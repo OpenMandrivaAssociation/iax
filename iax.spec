@@ -4,13 +4,13 @@
 Summary:	IAX (Inter Asterisk eXchange) Library
 Name:		iax
 Version:	0.2.3
-Release:	%mkrel 13
+Release:	%mkrel 14
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.asterisk.org/
 Source0:	libiax2-0.2.3-20060212.tar.bz2
 Patch0:		libiax2.diff
-BuildRequires:	automake1.7
+BuildRequires:	automake
 BuildRequires:	autoconf2.5
 %if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
@@ -80,7 +80,7 @@ find -type f -name "Makefile.am" | xargs perl -pi -e "s|-DDEBUG_SUPPORT||g"
 
 %build
 export WANT_AUTOCONF_2_5=1
-libtoolize --copy --force; aclocal-1.7; autoconf --force; automake-1.7 --add-missing --copy --force-missing
+libtoolize --copy --force; aclocal; autoconf --force; automake --add-missing --copy --force-missing
 
 %configure2_5x \
     --disable-extreme-debug \
