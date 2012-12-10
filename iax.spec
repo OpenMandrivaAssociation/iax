@@ -5,7 +5,7 @@
 Summary:	IAX (Inter Asterisk eXchange) Library
 Name:		iax
 Version:	0.2.3
-Release:	%mkrel 14
+Release:	15
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.asterisk.org/
@@ -13,10 +13,7 @@ Source0:	libiax2-0.2.3-20060212.tar.bz2
 Patch0:		libiax2.diff
 Patch1:		libiax2-fix-str-fmt.patch
 Patch2:		libiax2-install.patch
-%if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
-%endif
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Inter Asterisk eXchange, lovingly called IAX (pronounced: eeks),
@@ -89,27 +86,12 @@ autoreconf -fi
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %makeinstall_std
 
 # install _all_ headers...
 install -m0644 src/*.h %{buildroot}%{_includedir}/iax/
 
-%if %mdkversion >= 1020
 %multiarch_binaries %{buildroot}%{_bindir}/iax-config
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
@@ -119,11 +101,76 @@ install -m0644 src/*.h %{buildroot}%{_includedir}/iax/
 
 %files -n %{develname}
 %defattr(-,root,root)
-%if %mdkversion >= 1020
-%multiarch %{multiarch_bindir}/iax-config
-%endif
+%{multiarch_bindir}/iax-config
 %{_bindir}/iax-config
 %{_includedir}/iax
 %{_libdir}/*.so
 %{_libdir}/*.a
-%{_libdir}/*.la
+
+
+%changelog
+* Mon Jan 03 2011 Funda Wang <fwang@mandriva.org> 0.2.3-14mdv2011.0
++ Revision: 627966
+- fix build
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - don't force the usage of automake1.7
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 0.2.3-12mdv2009.0
++ Revision: 247139
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 0.2.3-10mdv2008.1
++ Revision: 140755
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+    - import iax
+
+
+* Sun Sep 17 2006 Oden Eriksson <oeriksson@mandriva.com> 0.2.3-10mdv2007.0
+- rebuild
+
+* Sun Feb 12 2006 Oden Eriksson <oeriksson@mandriva.com> 0.2.3-9mdk
+- use a svn snap (r35)
+- new P0
+
+* Thu May 05 2005 Oden Eriksson <oeriksson@mandriva.com> 0.2.3-8mdk
+- use new code from the iaxclient codebase
+
+* Thu May 05 2005 Oden Eriksson <oeriksson@mandriva.com> 0.2.3-7mdk
+- rebuilt with gcc4
+
+* Sun Apr 10 2005 Oden Eriksson <oeriksson@mandrakesoft.com> 0.2.3-6mdk
+- use the %%mkrel macro
+- added new jitterbuffer code from the iaxclient codebase
+- revert latest "lib64 fixes"
+
+* Mon Jan 31 2005 Oden Eriksson <oeriksson@mandrakesoft.com> 0.2.3-5mdk
+- fix deps and conditional %%multiarch
+- fix requires-on-release
+
+* Tue Dec 28 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 0.2.3-4mdk
+- lib64 fixes
+
+* Fri Sep 10 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 0.2.3-3mdk
+- 0.2.3
+- drop P0, it's included
+- fix deps
+
+* Thu Jul 10 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 0.2.2-3mdk
+- rebuild
+
+* Tue Jul 08 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 0.2.2-2mdk
+- Copyright/License
+
+* Tue Jul 08 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 0.2.2-1mdk
+- initial cooker contrib
+- mandrakified the provided spec file
