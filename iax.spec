@@ -5,7 +5,7 @@
 Summary:	IAX (Inter Asterisk eXchange) Library
 Name:		iax
 Version:	0.2.3
-Release:	15
+Release:	16
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.asterisk.org/
