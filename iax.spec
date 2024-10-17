@@ -8,7 +8,7 @@ Version:	0.2.3
 Release:	16
 License:	LGPL
 Group:		System/Libraries
-URL:		http://www.asterisk.org/
+URL:		https://www.asterisk.org/
 Source0:	libiax2-0.2.3-20060212.tar.bz2
 Patch0:		libiax2.diff
 Patch1:		libiax2-fix-str-fmt.patch
